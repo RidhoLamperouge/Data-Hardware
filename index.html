@@ -4,73 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Data Hardware</title>
+<link rel="stylesheet" href="css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--bg:#f6f8fb;--card:#fff;--head:#e7ecf3;--line:#c9d1dc;--ink:#1a2230;--mute:#5f6b7d;--ok:#d6f5d6;--okink:#1f5f2a;--wait:#2563eb;--warn:#f59e0b;--bad:#dc2626;--row:#f8fafc}
-*{box-sizing:border-box}
-body{margin:0;font:14px/1.6 "Inter","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
-header{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 24px;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 1px 2px rgba(15,23,42,.02)}
-header .brand{display:flex;align-items:center;gap:10px;margin-right:8px}
-header h1{font-size:16px;margin:0;font-weight:600}
-header .user{display:flex;align-items:center;gap:10px;margin-left:auto;color:var(--mute);font-size:13px}
-.tab{border:0;background:none;padding:9px 16px;font:inherit;cursor:pointer;border-bottom:2px solid transparent;color:var(--mute);border-radius:6px 6px 0 0}
-.tab:hover{color:var(--ink);background:rgba(37,99,235,.04)}
-.tab.on{border-color:var(--wait);color:var(--ink);font-weight:600}
-.sp{flex:1}
-main{padding:24px;max-width:1400px;margin:auto;display:grid;gap:16px}
-button{font:inherit;cursor:pointer;transition:all .15s ease}
-.btn{background:var(--wait);color:#fff;border:0;border-radius:8px;padding:8px 16px;display:flex;align-items:center;gap:6px;font-weight:500}
-.btn:hover{filter:brightness(1.05)}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
-.btn.alt:hover{background:#f1f5f9}
-.btn.sm{padding:4px 10px;font-size:12.5px;border-radius:6px}
-.btn.del{color:var(--bad);border-color:rgba(220,38,38,.4)}
-.btn.del:hover{background:rgba(220,38,38,.05)}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;box-shadow:0 1px 2px rgba(15,23,42,.01)}
-.toolbar .group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.toolbar label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mute)}
-.toolbar input,.toolbar select{border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit;background:#fff}
-.toolbar .grow{flex:1}
-h2{margin:0;font-size:15px;padding:8px 14px;background:linear-gradient(90deg,var(--head),transparent);border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-h2 small{color:var(--mute);font-weight:400}
-.wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.01)}
-table{border-collapse:collapse;width:100%;min-width:980px}
-th,td{border-bottom:1px solid var(--line);padding:9px 16px;text-align:left;vertical-align:top}
-th{background:var(--card);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mute);font-weight:600;position:sticky;top:0}
-tbody tr:hover{background:var(--row)}
-tbody tr:last-child td{border-bottom:0}
-.pill{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:500}
-.pill.Selesai{background:var(--ok);color:var(--okink)}
-.pill.Pending{background:rgba(245,158,11,.16);color:#92400e}
-.tot{display:flex;gap:8px;flex-wrap:wrap}
-.tot span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:13px}
-.item{display:flex;flex-direction:column;gap:2px}.item+.item{margin-top:6px}.item small{color:var(--mute)}
-dialog{border:0;border-radius:14px;padding:0;width:min(620px,94vw);box-shadow:0 40px 60px -40px rgba(15,23,42,.4)}
-dialog::backdrop{background:rgba(15,23,42,.4)}
-dialog form{padding:24px;display:grid;gap:14px}
-dialog h1{margin:0;font-size:18px}
-label{display:grid;gap:6px;font-size:13px;color:var(--mute)}
-label.req span::after{content:" *";color:var(--bad)}
-input,select,textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px;color:var(--ink);background:#fff}
-input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid rgba(37,99,235,.4);outline-offset:1px}
-.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-@media(max-width:720px){.row2{grid-template-columns:1fr}}
-.irow{display:grid;grid-template-columns:1.4fr 1fr auto;gap:8px;align-items:center}
-.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
-#login{max-width:360px;margin:14vh auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:12px;box-shadow:0 30px 60px -40px rgba(15,23,42,.4)}
-#login h1{margin:0;text-align:center}
-.err{color:var(--bad);min-height:1.2em;font-size:13px}
-.empty{padding:32px;text-align:center;color:var(--mute);background:var(--card);border:1px dashed var(--line);border-radius:12px}
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(26,34,48,.92);color:#fff;padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:all .25s ease;font-size:13px}
-.toast.show{opacity:1;bottom:26px}
-[hidden]{display:none!important}
-</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 <div id="login" hidden>
   <h1>Data Hardware</h1>
-  <p style="margin:0;text-align:center;color:var(--mute);font-size:13px">Masuk untuk mengelola data</p>
+  <p>Masuk untuk mengelola data</p>
   <label>Email<input id="em" type="email" autocomplete="username" placeholder="nama@perusahaan.com"></label>
   <label>Kata sandi<input id="pw" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi"></label>
   <div class="err" id="lerr"></div>
@@ -80,9 +21,13 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 <div id="app" hidden>
   <header>
     <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+      </div>
       <h1>Data Hardware</h1>
     </div>
-    <button class="tab on" data-t="rakit">Rakit PC</button>
+    <button class="tab on" data-t="dashboard">Dashboard</button>
+    <button class="tab" data-t="rakit">Rakit PC</button>
     <button class="tab" data-t="problem">Problem Hardware</button>
     <div class="user">
       <span id="uemail"></span>
@@ -92,17 +37,27 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
   </header>
   <main>
     <div class="toolbar">
-      <div class="group grow">
-        <input id="q" placeholder="Cari..." style="min-width:260px">
+      <div class="group grow" data-only="list">
+        <input id="q" type="search" placeholder="Cari...">
       </div>
-      <div class="group">
-        <label>Teknisi
-          <select id="ft">
-            <option value="">Semua</option>
-          </select>
-        </label>
+      <div class="group grow" data-only="dashboard">
+        <span class="hint">Ringkasan rakitan PC dan problem hardware</span>
       </div>
-      <button class="btn" id="add">+ Tambah data</button>
+      <label data-only="dashboard">Periode
+        <select id="periode">
+          <option value="">Semua waktu</option>
+          <option value="ytd">Tahun ini</option>
+          <option value="12">12 bulan terakhir</option>
+          <option value="6">6 bulan terakhir</option>
+          <option value="3">3 bulan terakhir</option>
+        </select>
+      </label>
+      <label>Teknisi
+        <select id="ft">
+          <option value="">Semua</option>
+        </select>
+      </label>
+      <button class="btn" id="add" data-only="list">+ Tambah data</button>
     </div>
     <div id="view"></div>
   </main>
@@ -112,222 +67,14 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 <datalist id="tek"></datalist>
 <div class="toast" id="toast"></div>
 
-<script>
-  /* === Supabase Config === */
-  const SUPA_URL = 'https://ilkvtkgidzsbvrudqclr.supabase.co';
-  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlsa3Z0a2dpZHpzYnZydWRxY2xyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1NDMwNzcsImV4cCI6MjEwODExOTA3N30.xIddx2Qgjwoh8jI-1ARM56FsIUJq0QWapYkF7zCOSJc';
-  const TEKNISI = ['RAHMAD','RIDHO','ERIC','ADIT','RYAN'];
-  /* ======================== */
-
-const db = supabase.createClient(SUPA_URL, SUPA_KEY);
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const BLN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-const fmt = d => d ? new Date(d + 'T00:00').toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) : '';
-const bulan = d => d ? BLN[+d.slice(5,7) - 1] + ' ' + d.slice(0,4) : 'Tanpa tanggal';
-let tab = 'rakit', rows = [], allRows = [];
-
-$('#tek').innerHTML = TEKNISI.map(t => `<option value="${t}">`).join('');
-$('#ft').innerHTML = '<option value="">Semua</option>' + TEKNISI.map(t => `<option value="${t}">${t}</option>`).join('');
-document.querySelectorAll('input[list]').forEach(i => i.setAttribute('list','tek'));
-
-function toast(msg){
-  const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000);
-}
-
-/* ---------- login ---------- */
-async function cek() {
-  const { data } = await db.auth.getSession();
-  $('#login').hidden = !!data.session;
-  $('#app').hidden = !data.session;
-  if (data.session){
-    $('#uemail').textContent = data.session.user.email || '';
-    muat();
-  }
-}
-$('#lbtn').onclick = async () => {
-  $('#lbtn').disabled = true;
-  $('#lerr').textContent = '';
-  const { error } = await db.auth.signInWithPassword({ email: $('#em').value.trim(), password: $('#pw').value });
-  $('#lerr').textContent = error ? 'Email atau kata sandi salah.' : '';
-  $('#lbtn').disabled = false;
-  if (!error) cek();
-};
-$('#em').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#pw').focus(); }});
-$('#pw').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#lbtn').click(); }});
-$('#out').onclick = async () => { await db.auth.signOut(); cek(); };
-$('#reload').onclick = () => muat(true);
-
-/* ---------- tab & filter ---------- */
-document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
-  tab = b.dataset.t;
-  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
-  $('#q').value = '';
-  $('#ft').value = '';
-  muat();
-});
-$('#add').onclick = () => form();
-$('#q').addEventListener('input', applyFilter);
-$('#ft').addEventListener('change', applyFilter);
-
-function applyFilter(){
-  const q = $('#q').value.toLowerCase();
-  const ft = $('#ft').value;
-  rows = allRows.filter(r => {
-    const tek = (r.teknisi || '').toUpperCase();
-    if(ft && tek !== ft) return false;
-    if(!q) return true;
-    if(tab === 'rakit'){
-      const kode = (r.kode||'').toLowerCase();
-      const pembeli = (r.nama_pembeli||'').toLowerCase();
-      const items = (r.rakit_item||[]).map(i=> (i.nama_item||'')+' '+(i.supplier||'')).join(' ').toLowerCase();
-      return kode.includes(q)||pembeli.includes(q)||items.includes(q)||tek.toLowerCase().includes(q);
-    } else {
-      const nb = (r.nama_barang||'').toLowerCase();
-      const mr = (r.merek||'').toLowerCase();
-      const pm = (r.pemilik||'').toLowerCase();
-      const pr = (r.problem||'').toLowerCase();
-      return nb.includes(q)||mr.includes(q)||pm.includes(q)||pr.includes(q)||tek.toLowerCase().includes(q);
-    }
-  });
-  tab === 'rakit' ? tampilRakit() : tampilProblem();
-}
-
-async function muat(silent=false) {
-  if(!silent){ $('#view').innerHTML = '<div class="empty">Memuat data...</div>'; }
-  const q = tab === 'rakit'
-    ? db.from('rakit_pc').select('*, rakit_item(*)').order('tanggal_rakit', { ascending: false }).order('kode', { ascending: false })
-    : db.from('problem_hardware').select('*').order('tanggal_antar', { ascending: false });
-  const { data, error } = await q;
-  if (error) { $('#view').innerHTML = `<div class="empty">Gagal memuat data: ${esc(error.message)}</div>`; return; }
-  allRows = data || [];
-  applyFilter();
-  if(silent) toast('Data diperbarui');
-}
-
-function group(key) {
-  const g = {};
-  rows.forEach(r => (g[bulan(r[key])] ||= []).push(r));
-  return Object.entries(g);
-}
-
-/* ---------- Rakit PC ---------- */
-function tampilRakit() {
-  if (!allRows.length){ $('#view').innerHTML = '<div class="empty">Belum ada data rakitan. Klik "Tambah data".</div>'; return; }
-  if (!rows.length){ $('#view').innerHTML = '<div class="empty">Tidak ada data yang cocok dengan filter.</div>'; return; }
-  const total = {}; TEKNISI.forEach(t => total[t] = 0);
-  allRows.forEach(r => { const t = (r.teknisi || '').toUpperCase(); if (t && total.hasOwnProperty(t)) total[t] = (total[t] || 0) + 1; });
-  let h = '<div class="tot">' + Object.entries(total).map(([t, n]) => `<span>${esc(t)} <b>${n}</b></span>`).join('') + `<span>Total: <b>${allRows.length}</b></span></div>`;
-  group('tanggal_rakit').forEach(([bln, list]) => {
-    h += `<section style="display:grid;gap:10px"><h2>${bln}<small>${list.length} data</small></h2><div class="wrap"><table><thead><tr><th>Kode</th><th>Item</th><th>Tanggal rakit</th><th>Nama pembeli</th><th>Tanggal beli</th><th>Garansi</th><th>Teknisi</th><th style="text-align:right">Aksi</th></tr></thead><tbody>`;
-    list.forEach(r => {
-      const items = (r.rakit_item || []).sort((a, b) => a.id - b.id).map(i => `<div class="item"><span>${esc(i.nama_item)}</span>${i.supplier?`<small>Supplier: ${esc(i.supplier)}</small>`:''}</div>`).join('') || '<span style="color:var(--mute)">-</span>';
-      h += `<tr><td><b>${esc(r.kode)||'-'}</b></td><td>${items}</td><td>${fmt(r.tanggal_rakit)||'-'}</td><td>${esc(r.nama_pembeli)||'-'}</td><td>${fmt(r.tanggal_beli)||'-'}</td><td>${esc(r.garansi)||'-'}</td><td>${esc((r.teknisi||'').toUpperCase())||'-'}</td>
-      <td style="text-align:right"><div class="acts"><button class="btn alt sm" onclick="form(${r.id})">Edit</button><button class="btn alt sm del" onclick="hapus(${r.id})">Hapus</button></div></td></tr>`;
-    });
-    h += '</tbody></table></div></section>';
-  });
-  $('#view').innerHTML = h;
-}
-
-/* ---------- Problem Hardware ---------- */
-function tampilProblem() {
-  if (!allRows.length){ $('#view').innerHTML = '<div class="empty">Belum ada data problem hardware. Klik "Tambah data".</div>'; return; }
-  if (!rows.length){ $('#view').innerHTML = '<div class="empty">Tidak ada data yang cocok dengan filter.</div>'; return; }
-  let h = '';
-  group('tanggal_antar').forEach(([bln, list]) => {
-    h += `<section style="display:grid;gap:10px"><h2>${bln}<small>${list.length} data</small></h2><div class="wrap"><table><thead><tr><th>Nama barang</th><th>Merek</th><th>Status</th><th>Pemilik</th><th>Problem</th><th>Tanggal antar</th><th>Tanggal jemput/kirim</th><th>Catatan</th><th>Teknisi</th><th style="text-align:right">Aksi</th></tr></thead><tbody>`;
-    list.forEach(r => {
-      const st = r.status || 'Pending';
-      h += `<tr><td><b>${esc(r.nama_barang)||'-'}</b></td><td>${esc(r.merek)||'-'}</td>
-      <td><select class="pill" style="border:0;padding:4px 10px;background:${st==='Selesai'?'var(--ok)':'rgba(245,158,11,.16)'};color:${st==='Selesai'?'var(--okink)':'#92400e'}" onchange="ubahStatus(${r.id}, this.value)">${['Pending','Selesai'].map(s => `<option ${s === st ? 'selected' : ''}>${s}</option>`).join('')}</select></td>
-      <td>${esc(r.pemilik)||'-'}</td><td style="max-width:320px;white-space:normal">${esc(r.problem)||'-'}</td><td>${fmt(r.tanggal_antar)||'-'}</td><td>${fmt(r.tanggal_jemput)||'-'}</td><td>${esc(r.catatan)||'-'}</td><td>${esc((r.teknisi||'').toUpperCase())||'-'}</td>
-      <td style="text-align:right"><div class="acts"><button class="btn alt sm" onclick="form(${r.id})">Edit</button><button class="btn alt sm del" onclick="hapus(${r.id})">Hapus</button></div></td></tr>`;
-    });
-    h += '</tbody></table></div></section>';
-  });
-  $('#view').innerHTML = h;
-}
-async function ubahStatus(id, status) {
-  const sel = event.target;
-  sel.disabled = true;
-  const { error } = await db.from('problem_hardware').update({ status }).eq('id', id);
-  sel.disabled = false;
-  if (error){ alert('Gagal menyimpan: ' + error.message); muat(); return; }
-  toast('Status diperbarui');
-  muat(true);
-}
-
-/* ---------- form tambah/edit ---------- */
-const f = (name, label, type = 'text', v = '', extra = '', req=false) =>
-  `<label class="${req?'req':''}"><span>${label}</span><input name="${name}" type="${type}" value="${esc(v)}" ${extra}></label>`;
-
-function itemRow(i = {}) {
-  return `<div class="irow"><input name="it_nama" placeholder="Nama item *" value="${esc(i.nama_item)}"><input name="it_sup" placeholder="Supplier" value="${esc(i.supplier)}"><button type="button" class="btn alt sm del" onclick="this.parentNode.remove()">Hapus</button></div>`;
-}
-window.tambahItem = () => $('#items').insertAdjacentHTML('beforeend', itemRow());
-
-window.form = id => {
-  const r = rows.find(x => x.id === id) || allRows.find(x => x.id === id) || {};
-  let h = `<h1>${id ? 'Edit' : 'Tambah'} data ${tab === 'rakit' ? 'Rakit PC' : 'Problem Hardware'}</h1>`;
-  if (tab === 'rakit') {
-    h += `<div class="row2">${f('kode','Kode','text',r.kode,'placeholder="AGT005" required',true)}${f('garansi','Garansi','text',r.garansi ?? '1 Tahun')}</div>
-    <div class="row2">${f('tanggal_rakit','Tanggal rakit','date',r.tanggal_rakit)}${f('tanggal_beli','Tanggal beli','date',r.tanggal_beli)}</div>
-    <div class="row2">${f('nama_pembeli','Nama pembeli','text',r.nama_pembeli)}${f('teknisi','Teknisi merakit','text',r.teknisi,'list="tek" placeholder="Pilih/isi"')}</div>
-    <div style="display:grid;gap:8px"><span style="font-size:13px;color:var(--mute)">Item rakitan</span><div id="items" style="display:grid;gap:6px">${(r.rakit_item?.length ? r.rakit_item.sort((a,b)=>a.id-b.id) : [{}]).map(itemRow).join('')}</div>
-    <button type="button" class="btn alt sm" style="justify-self:start" onclick="tambahItem()">+ Tambah item</button></div>`;
-  } else {
-    h += `<div class="row2">${f('nama_barang','Nama barang','text',r.nama_barang,'required',true)}${f('merek','Merek','text',r.merek)}</div>
-    <div class="row2">${f('pemilik','Pemilik','text',r.pemilik)}<label><span>Status</span><select name="status">${['Pending','Selesai'].map(s=>`<option ${s===(r.status||'Pending')?'selected':''}>${s}</option>`).join('')}</select></label></div>
-    <label><span>Problem/masalah</span><textarea name="problem" rows="3">${esc(r.problem)}</textarea></label>
-    <div class="row2">${f('tanggal_antar','Tanggal antar','date',r.tanggal_antar)}${f('tanggal_jemput','Tanggal jemput/kirim','date',r.tanggal_jemput)}</div>
-    <div class="row2">${f('catatan','Catatan','text',r.catatan)}${f('teknisi','Teknisi bertanggung jawab','text',r.teknisi,'list="tek" placeholder="Pilih/isi"')}</div>`;
-  }
-  h += `<div class="acts"><button type="button" class="btn alt" onclick="dlg.close()">Batal</button><button class="btn" id="sbtn">Simpan</button></div>`;
-  $('#frm').innerHTML = h;
-  $('#frm').onsubmit = e => { e.preventDefault(); simpan(id); };
-  $('#dlg').showModal();
-};
-
-async function simpan(id) {
-  const btn = $('#sbtn'); if(btn){ btn.disabled = true; btn.textContent = 'Menyimpan...'; }
-  const fd = new FormData($('#frm'));
-  const clean = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, v === '' ? null : v]));
-  let err;
-  if (tab === 'rakit') {
-    const o = clean(Object.fromEntries(['kode','garansi','tanggal_rakit','tanggal_beli','nama_pembeli','teknisi'].map(k => [k, fd.get(k)])));
-    if (o.teknisi) o.teknisi = String(o.teknisi).toUpperCase();
-    if(!o.kode){ alert('Kode wajib diisi'); if(btn){btn.disabled=false;btn.textContent='Simpan';} return; }
-    const nama = fd.getAll('it_nama'), sup = fd.getAll('it_sup');
-    let rid = id;
-    if (id) ({ error: err } = await db.from('rakit_pc').update(o).eq('id', id));
-    else { const r = await db.from('rakit_pc').insert(o).select('id').single(); err = r.error; rid = r.data?.id; }
-    if (!err && rid) {
-      await db.from('rakit_item').delete().eq('rakit_id', rid);
-      const items = nama.map((n, i) => ({ rakit_id: rid, nama_item: String(n).trim(), supplier: sup[i] ? String(sup[i]).trim() || null : null })).filter(i => i.nama_item);
-      if (items.length) ({ error: err } = await db.from('rakit_item').insert(items));
-    }
-  } else {
-    const o = clean(Object.fromEntries(fd.entries()));
-    if (o.teknisi) o.teknisi = String(o.teknisi).toUpperCase();
-    if(!o.nama_barang){ alert('Nama barang wajib diisi'); if(btn){btn.disabled=false;btn.textContent='Simpan';} return; }
-    ({ error: err } = id ? await db.from('problem_hardware').update(o).eq('id', id) : await db.from('problem_hardware').insert(o));
-  }
-  if (err) { alert('Gagal menyimpan: ' + err.message); if(btn){btn.disabled=false;btn.textContent='Simpan';} return; }
-  $('#dlg').close();
-  toast(id ? 'Data berhasil diperbarui' : 'Data berhasil ditambahkan');
-  muat();
-}
-
-window.hapus = async id => {
-  if (!confirm('Hapus data ini?\nTindakan ini tidak bisa dibatalkan.')) return;
-  const { error } = await db.from(tab === 'rakit' ? 'rakit_pc' : 'problem_hardware').delete().eq('id', id);
-  if (error){ alert('Gagal menghapus: ' + error.message); return; }
-  toast('Data dihapus');
-  muat();
-};
-
-cek();
-</script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/data.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/rakit.js"></script>
+<script src="js/problem.js"></script>
+<script src="js/form.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
